@@ -12,9 +12,9 @@ Based on these findings, we propose and apply an alternate, physically-motivated
 ## This repository
 
 This repository contains a working example for the prediction-based and mean-based method discussed in the [paper](link). We provide configuration samples and the corresponding values of correlation functions for the spinless FKM on a L=20 square lattice in the noise-free and noisy case. The code features:
-    - the prediction-based method with deep neural networks (DNNs)
-    - the prediction-based method with linear models
-    - the mean-based method
+- the prediction-based method with deep neural networks (DNNs)
+- the prediction-based method with linear models
+- the mean-based method
     
 As an input, one can choose between raw configurations, the magnitude of their discrete Fourier transform, or the corresponding values of the set of three correlation functions. Furthermore, one can either analyze the noise-free or noisy case in a one-/two-dimensional parameter space.
 
