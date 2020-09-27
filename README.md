@@ -7,7 +7,7 @@
 Fully automated classification methods that yield direct physical insights into phase diagrams are of current interest. Here, we demonstrate an unsupervised machine learning method for phase classification which is rendered interpretable via an analytical derivation of its optimal predictions and allows for an automated construction scheme for order parameters.
 Based on these findings, we propose and apply an alternate, physically-motivated, data-driven scheme which relies on the difference between mean input features. This mean-based method is computationally cheap and directly interpretable. As an example, we consider the physically rich ground-state phase diagram of the spinless Falicov-Kimball model.
 
-![](scheme.png)
+![](scheme.pdf)
 
 ## This repository
 
@@ -40,7 +40,7 @@ The folder *mean_based_method* contains the code for the mean-based method. Conf
 - [Julian Arnold](https://github.com/arnoldjulian)
 - [Frank Schäfer](https://github.com/frankschae)
 - [Martin Žonda](http://cmd.karlov.mff.cuni.cz/~zonda/index.html)
-- [Axel U.J. Lode](http://ultracold.org/)
+- [Axel U.J. Lode](http://ultracold.org/menu/index.php?option=com_content&view=article&id=14&Itemid=107)
 
 
 ```
