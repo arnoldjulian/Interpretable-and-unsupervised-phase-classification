@@ -31,7 +31,7 @@ The folders *noise_free_data* and *noisy_data* contain the raw configurations, a
 **Prediction-based method with DNNs**
 
 The folder *prediction_based_method/DNNs* contains the code for the prediction-based method with DNNs. First, configure the *conf.py* file to, e.g., select the input, decide whether the noise-free or noisy case should be considered, and specify DNN hyperparameters. Then, run the *main.py* file which will create a folder *results/model* for the model and start the training of the DNN.
-To evaluate the DNN during (or after) training, specify the corresponding training epoch in the *model/code/plotting.py* file and executing it. This will generate plots of the predicted phase diagram and loss curve in the *model/final_figures/* folder.
+To evaluate the DNN during (or after) training, specify the corresponding training epoch in the *model/code/plotting.py* file and executing it. This will generate plots of the predicted phase diagram and loss curve in the *model/final_figures* folder.
 
 **Prediction-based method with linear models**
 
