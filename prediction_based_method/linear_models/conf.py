@@ -1,6 +1,6 @@
 # path for the data folders
-path_data_noisefree = '../../../ms_models/L20x20_all_minsorted/'
-path_data_noisy = '../../../ms_models/L20x20_all_sorted/'
+path_data_noisefree = '../../data/'
+path_data_noisy = '../../data/'
 
 # type of input to be used; choose between 'raw', 'ft', and 'corr_func'
 input_type = 'ft'
