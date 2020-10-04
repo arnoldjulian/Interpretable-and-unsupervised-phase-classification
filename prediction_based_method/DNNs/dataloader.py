@@ -56,13 +56,13 @@ class DatasetFKM(data.Dataset):
         # load it
         content = np.loadtxt(file)
 
-        if self.input_type == 'corr':
+        if self.input_type == 'corr_func':
             input_np = np.loadtxt(
                 str(file)[:-8] + 'corr_func.dat'.format(self.input_type)).reshape(-1)
             X = torch.from_numpy(input_np).view(1, -1).float()
 
         # when considering the raw configuration or the magnitude of the discrete FT as input, apply a random transformation of p4m to the configuration beforehand
-        elif self.input_type == 'ft' or self.input_type == 'raw':
+        else:
             if self.transform:
                 X = torch.from_numpy(content).view(1, conf.dim, conf.dim).float()
 

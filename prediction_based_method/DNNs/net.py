@@ -19,34 +19,53 @@ class Net(nn.Module):
 
         # define neural network
 
-        # convolutional layers
-        conv_layers = []
+        if conf.input_type == 'corr_func':
+            num_inputs = 3*int(round(conf.dim/2))
 
-        # number of convolutions
-        n_conv = len(conf.kernels)
+            conf.fcs[0] = num_inputs
 
-        for i in range(n_conv):
-            conv_layers.extend([nn.Conv2d(conf.channels[i], conf.channels[i+1],
-                                          conf.kernels[i], conf.strides[i]), self.actfunc])
+            fc_layers = []
+            n_fc = len(conf.fcs)-1
+            for i in range(n_fc):
+                fc_layers.extend([nn.Linear(conf.fcs[i], conf.fcs[i+1]),
+                                  self.actfunc]
+                                 )
+            fc_layers.pop()
 
-        # fully-connected (fc) layers
-        fc_layers = []
-        n_fc = len(conf.fcs)-1
-        for i in range(n_fc):
-            fc_layers.extend([nn.Linear(conf.fcs[i], conf.fcs[i+1]),
-                              self.actfunc]
-                             )
-        fc_layers.pop()
+            self.fc_layers = nn.Sequential(*fc_layers)
 
-        self.conv_layers = nn.Sequential(*conv_layers)
-        self.fc_layers = nn.Sequential(*fc_layers)
+        else:
+            # convolutional layers
+            conv_layers = []
+
+            # number of convolutions
+            n_conv = len(conf.kernels)
+
+            for i in range(n_conv):
+                conv_layers.extend([nn.Conv2d(conf.channels[i], conf.channels[i+1],
+                                              conf.kernels[i], conf.strides[i]), self.actfunc])
+
+            # fully-connected (fc) layers
+            fc_layers = []
+            n_fc = len(conf.fcs)-1
+            for i in range(n_fc):
+                fc_layers.extend([nn.Linear(conf.fcs[i], conf.fcs[i+1]),
+                                  self.actfunc]
+                                 )
+            fc_layers.pop()
+
+            self.conv_layers = nn.Sequential(*conv_layers)
+            self.fc_layers = nn.Sequential(*fc_layers)
 
     # computing an output 'out' given an input 'x' and the above defined neural network
     def forward(self, x):
-        out = self.conv_layers(x)
-        out = out.view(-1, self.num_flat_features(out))
-        # print(out.shape)
-        out = self.fc_layers(out)
+        if conf.input_type == 'corr_func':
+            x = x.view(-1, self.num_flat_features(x))
+            out = self.fc_layers(x)
+        else:
+            out = self.conv_layers(x)
+            out = out.view(-1, self.num_flat_features(out))
+            out = self.fc_layers(out)
 
         return out
 

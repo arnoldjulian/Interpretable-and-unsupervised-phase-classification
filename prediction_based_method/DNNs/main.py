@@ -198,7 +198,7 @@ if __name__ == '__main__':
         foldername = 'results/' + dt.strftime("%H-%M_%d-%m-%Y") + '_L{}_dim_{}_nftar_{}_input_{}_Umin_{}_Umax_{}_lr_{}_sched_{}_{}_l2_{}'.format(
             conf.dim, conf.dim_parameter_space, conf.nf_tar, conf.input_type, conf.U_min, conf.U_max, conf.lr, conf.lr_scheduler_factor, conf.lr_scheduler_patience, conf.l2_lambda)
     else:
-        foldername = 'results/' + dt.strftime("%H-%M_%d-%m-%Y") + '_L{}_dim_{}_input_{}_lr_{}_sched_{}_{}_l2_{}_runid_{}'.format(
+        foldername = 'results/' + dt.strftime("%H-%M_%d-%m-%Y") + '_L{}_dim_{}_input_{}_lr_{}_sched_{}_{}_l2_{}'.format(
             conf.dim, conf.dim_parameter_space, conf.input_type, conf.lr, conf.lr_scheduler_factor, conf.lr_scheduler_patience, conf.l2_lambda)
 
     print(foldername)
@@ -210,7 +210,7 @@ if __name__ == '__main__':
         txt_file.write(
             'epoch, epoch_loss_training, epoch_loss_test, epoch duration (s)' + '\n')
 
-    for name in ['analysis', 'dataloader', 'divergence', 'conf', 'main', 'net', 'utils', 'visualization', 'interpretability', 'conf_analysis', 'plotting']:
+    for name in ['dataloader', 'divergence', 'conf', 'main', 'net', 'utils', 'visualization', 'plotting']:
         copyfile('./{}.py'.format(name), foldername +
                  '/code/{}.py'.format(name))
 
@@ -228,40 +228,79 @@ if __name__ == '__main__':
     params_stand = conf.params_stand
 
     # Initialize data loader
-    loaded_set = dataloader.DatasetFKM(trainset, None, torch.zeros(
-        [1, conf.dim, conf.dim]), torch.ones([1, conf.dim, conf.dim]), conf.input_type)
+    if conf.input_type == 'corr_func':
+
+        num_inputs = 3*int(round(conf.dim/2))
+
+        loaded_set = dataloader.DatasetFKM(trainset, None, torch.zeros(
+            [1, num_inputs]), torch.ones([1, num_inputs]), conf.input_type)
+    else:
+        loaded_set = dataloader.DatasetFKM(trainset, None, torch.zeros(
+            [1, conf.dim, conf.dim]), torch.ones([1, conf.dim, conf.dim]), conf.input_type)
     loader = data.DataLoader(loaded_set, **params_stand)
 
     # Obtain standardization
-    standardization_stats = []
-    for i in range(conf.dim**2):
-        standardization_stats.append(utils.RunningStats())
+    if conf.input_type == 'corr_func':
 
-    for inputs, labels in loader:
-        inputs = inputs.to(device)
-        labels = labels.to(device)
+        num_inputs = 3*int(round(conf.dim/2))
+
+        standardization_stats = []
+        for i in range(num_inputs):
+            standardization_stats.append(utils.RunningStats())
+
+        for inputs, labels in loader:
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+            for i in range(num_inputs):
+                standardization_stats[i].push(torch.flatten(inputs)[i])
+
+        mean_np = np.zeros(num_inputs)
+        std_np = np.zeros(num_inputs)
+
+        for i in range(num_inputs):
+            mean_np[i] = standardization_stats[i].mean()
+            std_np[i] = standardization_stats[i].standard_deviation()
+            if std_np[i] == 0:
+                std_np[i] = 1
+
+        mean = torch.from_numpy(mean_np).view(1, num_inputs).float()
+        std = torch.from_numpy(std_np).view(1, num_inputs).float()
+
+        np.savetxt(foldername + '/trained_model/mean.txt',
+                   mean.squeeze().detach().numpy())
+        np.savetxt(foldername + '/trained_model/std.txt',
+                   std.squeeze().detach().numpy())
+
+    else:
+        standardization_stats = []
         for i in range(conf.dim**2):
-            standardization_stats[i].push(torch.flatten(inputs)[i])
+            standardization_stats.append(utils.RunningStats())
 
-    mean_np = np.zeros(conf.dim**2)
-    std_np = np.zeros(conf.dim**2)
+        for inputs, labels in loader:
+            inputs = inputs.to(device)
+            labels = labels.to(device)
+            for i in range(conf.dim**2):
+                standardization_stats[i].push(torch.flatten(inputs)[i])
 
-    for i in range(conf.dim**2):
-        mean_np[i] = standardization_stats[i].mean()
-        std_np[i] = standardization_stats[i].standard_deviation()
-        if std_np[i] == 0:
-            std_np[i] = 1
+        mean_np = np.zeros(conf.dim**2)
+        std_np = np.zeros(conf.dim**2)
 
-    mean = torch.from_numpy(mean_np).view(1, conf.dim, conf.dim).float()
-    std = torch.from_numpy(std_np).view(1, conf.dim, conf.dim).float()
+        for i in range(conf.dim**2):
+            mean_np[i] = standardization_stats[i].mean()
+            std_np[i] = standardization_stats[i].standard_deviation()
+            if std_np[i] == 0:
+                std_np[i] = 1
 
-    np.savetxt(foldername + '/trained_model/mean.txt',
-               mean.squeeze().detach().numpy())
-    np.savetxt(foldername + '/trained_model/std.txt',
-               std.squeeze().detach().numpy())
+        mean = torch.from_numpy(mean_np).view(1, conf.dim, conf.dim).float()
+        std = torch.from_numpy(std_np).view(1, conf.dim, conf.dim).float()
+
+        np.savetxt(foldername + '/trained_model/mean.txt',
+                   mean.squeeze().detach().numpy())
+        np.savetxt(foldername + '/trained_model/std.txt',
+                   std.squeeze().detach().numpy())
 
     # setup transformations for online data augmentation
-    transform = dataloader.Transformations(conf.input_type)
+    transform = dataloader.Transformations()
 
     # set model to training mode
     model.train()

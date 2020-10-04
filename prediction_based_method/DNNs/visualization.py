@@ -68,10 +68,10 @@ class myplotter():
         divp_np = divp.cpu().numpy()
         divp_plt = divp_np[1:-1]
 
-        self.axes[1].plot(p0_plt, dp_plt, label='$\delta p_0$')
-        self.axes[1].plot(p0_plt, ppred_plt, label='$p_\mathrm{pred}$')
-        self.axes[1].plot(p0_plt, divp_plt, label='$\mathrm{div}(\delta p)$')
-        self.axes[1].set_xlabel('$p_0$')
+        self.axes[1].plot(p0_save[1:-1], dp_plt, label='$\delta U$')
+        self.axes[1].plot(p0_save[1:-1], ppred_plt, label='$\hat{U}$')
+        self.axes[1].plot(p0_save[1:-1], divp_plt, label='$\mathrm{div}(\delta U)$')
+        self.axes[1].set_xlabel('$U$')
         self.axes[1].legend()
 
         return p0_save, ppred_save, dp_save, divp_np
@@ -147,14 +147,10 @@ class myplotter():
 
         # clear axis of plot
         self.axes[0].cla()
-
-        self.axes[0].plot(self.epoch_dict['train'], self.loss_dict['train'],
-                          label='$L_\mathrm{MSE}(Train)$')
-        self.axes[0].plot(self.epoch_dict['test'], self.loss_dict['test'],
-                          label='$L_\mathrm{MSE}(Test)$')
-        self.axes[0].set_xlabel('Epochs')
+        self.axes[0].plot(self.epoch_dict['train'], self.loss_dict['train'])
+        self.axes[0].set_xlabel('epochs')
+        self.axes[0].set_ylabel('$L_\mathrm{MSE}$')
         self.axes[0].set_yscale('log')
-        self.axes[0].legend()
 
         self.fig.tight_layout()
         plt.draw()
