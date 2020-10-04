@@ -88,8 +88,8 @@ if conf.dim_parameter_space == 1:
 
     # loop through each point (value of U) along the linescan
     indicator_array = np.zeros(len(U_range))
-    U_array = np.zeros(len(U_range))
-    for U_ind in range(len(U_range)):
+    U_array = np.zeros(len(U_range)-2)
+    for U_ind in range(1, len(U_range)-1):
         U = U_range[U_ind]
         U_l = U_range[U_ind-1]
         U_r = U_range[U_ind+1]

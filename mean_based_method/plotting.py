@@ -8,6 +8,21 @@ import conf
 
 # set rcParams to configure plots
 plt.rcParams.update({'figure.autolayout': True})
+plt.rcParams.update({'figure.autolayout': True})
+plt.rcParams.update({'font.size': 18})
+plt.rcParams.update({'axes.titlesize': 18})
+plt.rcParams.update({'axes.labelsize': 18})
+plt.rcParams.update({'xtick.labelsize': 18})
+plt.rcParams.update({'ytick.labelsize': 18})
+plt.rcParams.update({'axes.linewidth': 1.5})
+plt.rcParams.update({'xtick.major.size': 6})
+plt.rcParams.update({'xtick.major.width': 1.5})
+plt.rcParams.update({'ytick.major.size': 6})
+plt.rcParams.update({'ytick.major.width': 1.5})
+plt.rcParams.update({'xtick.minor.size': 3})
+plt.rcParams.update({'xtick.minor.width': 1.0})
+plt.rcParams.update({'ytick.minor.size': 3})
+plt.rcParams.update({'ytick.minor.width': 1.0})
 plt.rcParams.update({'ytick.minor.visible': False})
 plt.rcParams.update({'xtick.minor.visible': False})
 plt.rcParams.update({'xtick.top': False})
@@ -26,9 +41,9 @@ class MidpointNormalize(colors.Normalize):
         self.midpoint = midpoint
         colors.Normalize.__init__(self, vmin, vmax, clip)
 
-    def __call__(self, value, clip=None): .
-    x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
-    return np.ma.masked_array(np.interp(value, x, y), np.isnan(value))
+    def __call__(self, value, clip=None):
+        x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
+        return np.ma.masked_array(np.interp(value, x, y), np.isnan(value))
 
 # plot inferred phase diagram in two-dimensional parameter space
 
@@ -66,8 +81,8 @@ def plot_phase_diagram(p0_array, indicator_array, dim):
         midpoint=mid_val, vmin=elev_min, vmax=elev_max), cmap=my_cmap), ax=ax, pad=0.02)
 
     # save and close plot
-    plt.savefig('./result_mean_based_method_{}_{}.pdf'.format(conf.case,
-                                                              conf.input_type), bbox_inches='tight', pad_inches=0)
+    plt.savefig('./results/result_mean_based_method_{}_{}.pdf'.format(conf.case,
+                                                                      conf.input_type), bbox_inches='tight', pad_inches=0.02)
     plt.close(fig)
 
 # plot indicator along selected linescan of constant Nf
@@ -92,13 +107,12 @@ def plot_linescan(p0_array, indicator_array, dim):
                c=indicator_array[1:-1], cmap=my_cmap, norm=norm)
 
     # set ticks and axis labels
-    ax.set_xticks([2, 4, 6, 8])
     ax.xaxis.set_minor_locator(AutoMinorLocator(2))
     ax.yaxis.set_minor_locator(AutoMinorLocator(2))
     ax.set_xlabel('$U$')
-    ax.set_ylabel('$\Delta\bar{x} -\langle \Delta\bar{x} \rangle$')
+    ax.set_ylabel('$\Delta\\bar{x} -\langle \Delta\\bar{x} \\rangle$')
 
     # save and close plot
-    plt.savefig('./result_mean_based_method_{}_{}_nf_{:.0f}.pdf'.format(conf.case,
-                                                                        conf.input_type, conf.nf_tar), bbox_inches='tight', pad_inches=0)
+    plt.savefig('./results/result_mean_based_method_{}_{}_nf_{:.0f}.pdf'.format(conf.case,
+                                                                                conf.input_type, conf.nf), bbox_inches='tight', pad_inches=0.02)
     plt.close(fig)
