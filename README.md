@@ -39,10 +39,6 @@ The folder *prediction_based_method/linear_models* contains the code for the pre
 
 The folder *mean_based_method* contains the code for the mean-based method. Configure the corresponding *conf.py* file and run the *main.py* file. This will generate a plot of the inferred phase diagram within the same folder.
 
-
-If you encounter any problems, please don't hesitate to file an issue or contact us directly. 
-In case you found this work useful, please cite our [paper](link).
-
 ## Authors
 
 - [Julian Arnold](https://github.com/arnoldjulian)
@@ -50,6 +46,8 @@ In case you found this work useful, please cite our [paper](link).
 - [Martin Žonda](http://cmd.karlov.mff.cuni.cz/~zonda/index.html)
 - [Axel U.J. Lode](http://ultracold.org/menu/index.php?option=com_content&view=article&id=14&Itemid=107)
 
+If you encounter any problems, please don't hesitate to file an issue or contact us directly. 
+In case you found this work useful, please cite our [paper](link):
 
 ```
 @article{arnold:2020,
