@@ -33,7 +33,7 @@ elif dim_parameter_space == 2:
 
 
 # path to the folder containing the data to be analyzed
-data_dir = '../../../ms_models/L20x20_all_minsorted'
+data_dir = '../../data'
 
 # type of input to be used; choose between 'raw', 'ft', and 'corr_func'
 input_type = 'ft'
