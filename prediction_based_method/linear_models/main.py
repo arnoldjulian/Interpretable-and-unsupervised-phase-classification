@@ -167,7 +167,10 @@ Y_true_U = np.zeros(len(U_range))
 
 # obtain the average predictions at each point U by averaging over all corresponding samples
 for i in range(len(U_range)):
-    step = len(v_range)*conf.num_trafos
+    if conf.input_type == 'ft' or conf.input_type == 'raw':
+        step = len(v_range)*conf.num_trafos
+    else:
+        step = len(v_range)
     Y_pred_U[i] = np.mean(Y_pred[i*step:i*step+step])
     Y_true_U[i] = np.mean(Y[i*step:i*step+step])
 

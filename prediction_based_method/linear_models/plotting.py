@@ -7,6 +7,21 @@ import conf
 
 # set rcParams to configure plots
 plt.rcParams.update({'figure.autolayout': True})
+plt.rcParams.update({'figure.autolayout': True})
+plt.rcParams.update({'font.size': 18})
+plt.rcParams.update({'axes.titlesize': 18})
+plt.rcParams.update({'axes.labelsize': 18})
+plt.rcParams.update({'xtick.labelsize': 18})
+plt.rcParams.update({'ytick.labelsize': 18})
+plt.rcParams.update({'axes.linewidth': 1.5})
+plt.rcParams.update({'xtick.major.size': 6})
+plt.rcParams.update({'xtick.major.width': 1.5})
+plt.rcParams.update({'ytick.major.size': 6})
+plt.rcParams.update({'ytick.major.width': 1.5})
+plt.rcParams.update({'xtick.minor.size': 3})
+plt.rcParams.update({'xtick.minor.width': 1.0})
+plt.rcParams.update({'ytick.minor.size': 3})
+plt.rcParams.update({'ytick.minor.width': 1.0})
 plt.rcParams.update({'ytick.minor.visible': False})
 plt.rcParams.update({'xtick.minor.visible': False})
 plt.rcParams.update({'xtick.top': False})
@@ -62,13 +77,11 @@ def plot_linescan(U_range, Y_true_U, Y_pred_U, indicator_array, dim):
     ax2.tick_params(axis='y', which='both', colors='b')
     ax2.set_ylabel('$\hat{U}$', color='b', ha='right', labelpad=10)
 
-    ax2.set_yticks([2, 4, 6, 8])
-    ax.set_xticks([2, 4, 6, 8])
     ax.xaxis.set_minor_locator(AutoMinorLocator(2))
     ax.yaxis.set_minor_locator(AutoMinorLocator(2))
     ax2.yaxis.set_minor_locator(AutoMinorLocator(2))
 
     # save and close plot
-    plt.savefig('result_linear_models_{}_{}_nf_{:.0f}.pdf'.format(
-        conf.case, conf.input_type, conf.nf_tar))
+    plt.savefig('./results/result_linear_models_{}_{}_nf_{:.0f}.pdf'.format(
+        conf.case, conf.input_type, conf.nf))
     plt.close(fig)
