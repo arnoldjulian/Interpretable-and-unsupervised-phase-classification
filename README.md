@@ -24,7 +24,7 @@ We have tested our code with Python 3.8.2 and PyTorch 1.5.0. To run the code, pl
 
 **Data**
 
-The *data* folder will be provided upon request. It contains the raw configurations, as well as the corresponding values of correlation functions for the spinless FKM on a L=20 square lattice in the noise-free and noisy case. In the noise-free case, a single set of inputs corresponding to the estimated ground-state configuration is provided. Whereas in the noisy case, we provide set of inputs corresponding to the 10 configuration with the lowest-lying energies.
+The data will be provided upon request. It contains the raw configurations, as well as the corresponding values of correlation functions for the spinless FKM on a L=20 square lattice in the noise-free and noisy case. In the noise-free case, a single set of inputs corresponding to the estimated ground-state configuration is provided. Whereas in the noisy case, we provide set of inputs corresponding to the 10 configuration with the lowest-lying energies. This data should be put into the dedicated *data* folder.
 
 **Prediction-based method with DNNs**
 
