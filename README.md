@@ -52,7 +52,7 @@ In case you found this work useful, please cite our [paper](link):
 ```
 @article{arnold:2020,
   title={Interpretable and unsupervised phase classification},
-  author={Arnold, Julian and Sch\"{a}fer, Frank and {\v{Z}}onda, Martin and Lode, Axel UJ},
+  author={Arnold, Julian and Sch\"{a}fer, Frank and {\v{Z}}onda, Martin and Lode, Axel U. J.},
   journal={arXiv preprint xx},
   year={2020}
 }
