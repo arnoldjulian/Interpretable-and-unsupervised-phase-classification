@@ -11,7 +11,7 @@ Based on these findings, we propose and apply an alternate, physically-motivated
 
 ## This repository
 
-This repository contains a working example for the prediction-based and mean-based method discussed in the [paper](link). We provide configuration samples and the corresponding values of correlation functions for the spinless FKM on a L=20 square lattice in the noise-free case. The code features:
+This repository contains a working example for the prediction-based and mean-based method discussed in the [paper](https://arxiv.org/abs/2010.04730). We provide configuration samples and the corresponding values of correlation functions for the spinless FKM on a L=20 square lattice in the noise-free case. The code features:
 - the prediction-based method with deep neural networks (DNNs)
 - the prediction-based method with linear models
 - the mean-based method
@@ -47,12 +47,12 @@ The folder *mean_based_method* contains the code for the mean-based method. Conf
 - [Axel U.J. Lode](http://ultracold.org/menu/index.php?option=com_content&view=article&id=14&Itemid=107)
 
 If you encounter any problems, please don't hesitate to file an issue or contact us directly. 
-In case you found this work useful, please cite our [paper](link):
+In case you found this work useful, please cite our [paper](https://arxiv.org/abs/2010.04730):
 
 ```
-@article{arnold:2020,
+@article{arXiv:2010.04730,
   title={Interpretable and unsupervised phase classification},
   author={Arnold, Julian and Sch\"{a}fer, Frank and {\v{Z}}onda, Martin and Lode, Axel U. J.},
-  journal={arXiv preprint xx},
+  journal={arXiv preprint arXiv:2010.04730},
   year={2020}
 }
